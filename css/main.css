@@ -1,0 +1,36 @@
+.container[role="main"] {
+  margin-top: 40px;
+}
+
+.rating .options {
+  margin: 0 10px;
+}
+.rating .scale {
+  margin-bottom: 10px;
+}
+.rating .scale > span {
+  line-height: 18px;
+}
+.rating .options .option {
+  font-size: 15px;
+  font-weight: bold;
+  display: block;
+  float: left;
+  padding: 0 5px;
+  cursor: pointer; cursor: hand;
+  color: gainsboro;
+}
+
+.rating .options.has-selected .option {
+  color: black;
+}
+.rating .options:hover .option {
+  color: black !important;
+}
+
+.rating .options.has-selected .option.selected ~ .option {
+  color: gainsboro;
+}
+.rating .options .option:hover ~ .option {
+  color: gainsboro !important;
+}

@@ -1,0 +1,21 @@
+{
+  "name": "RelAlg.js-tutorial",
+  "version": "0.0.1",
+  "authors": [
+    "Morten Fangel <fangel@sevengoslings.net>"
+  ],
+  "description": "A tutorial for RelAlg.js",
+  "main": "main.js",
+  "license": "MIT",
+  "homepage": "http://fangel.github.io/RelAlg.js-tutorial",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "bower_components",
+  ],
+  "dependencies": {
+    "flight": "~1.1.1",
+    "bootstrap": "~3.0.0",
+    "requirejs": "~2.1.9"
+  }
+}
