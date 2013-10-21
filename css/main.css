@@ -2,7 +2,9 @@
   margin-top: 40px;
 }
 
-
+/*
+ * Rating widgets
+ */
 .rating .scale {
   margin-bottom: 10px;
 }
@@ -29,4 +31,11 @@
 }
 .rating .options .option:hover {
   color: black;
+}
+
+/*
+ * Success-widgets
+ */
+.ui-c-success {
+  display: none; /* Initially hidden */
 }
