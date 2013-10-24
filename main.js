@@ -12,8 +12,6 @@ require.config({
 });
 
 define(['flight/lib/debug', 'jquery'], function(DEBUG, $) {
-  DEBUG.enable(true)
-  DEBUG.events.logAll()
   require(['components/data/questions',
            'components/data/persistance',
            'components/ui/progress',
