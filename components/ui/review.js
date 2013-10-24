@@ -33,7 +33,6 @@ define(['jquery', 'flight/lib/component'], function($, defineComponent)  {
     })
     
     this.questionAdded = function(e, data) {
-      console.log(data)
       var row = $('<tr>').appendTo(this.select('tbody'))
       questions[data.qid] = {row: row, type: data.type}
       $('<td>')
