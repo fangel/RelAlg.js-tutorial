@@ -6,7 +6,7 @@ define(['flight/lib/component'], function(defineComponent)  {
     this.defaultAttrs({})
     
     this.questionAdded = function(e, data) {
-      this.trigger("questionAdded", {qid: data.qid})
+      this.trigger("questionAdded", {qid: data.qid, type: data.type, question: data.question})
     }
     
     this.questionAnswered = function(e, data) {

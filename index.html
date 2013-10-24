@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>RelAlg.js</title>
+    <title>RelAlg.js Tutorial</title>
     <script data-main="main" src="bower_components/requirejs/require.js"></script>
     <link type="text/css" rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" media="all" />
     <link type="text/css" rel="stylesheet" href="css/bootstrap-doc.css" media="all" />
@@ -23,11 +23,16 @@
         <div class="jumbotron">
           <div class="container">
             <h1>RelAlg.js tutorial</h1>
-            <p>I'm very glad that ...</p>
+            <p>
+              I'm very glad that that you've taken the time to come help me
+              test out RelAlg.js. In the process you'll hopefully learn a
+              little more about relational algebra. <br />
+              &nbsp;&nbsp;&nbsp;&mdash; Morten
+            </p>
           </div>
         </div>
         
-        <div class="bs-doc-section clearfix">
+        <div class="bs-doc-section">
           <div class="page-header">
             <h1 id="introduction">Lets get started!</h1>
           </div>
@@ -45,11 +50,11 @@
           <p>
             After each question, there will be a rating-bar. This will be a 1-5
             rating of how much you agree with the assessment.<br />
-            You answer by clicking the &#9733; that best describes your your 
+            You answer by clicking the circle (&#9679;) that best describes your your 
             answer.
           </p>
           <p>
-            For difficulty questions, 1 means a walk in the park and 5 means very difficult.
+            For difficulty questions, 1 means a very difficult and 5 means that it was easy.
             <br />
             For helpfulness questions, 1 means that it didn't help you at all and 5 means it
             made the job much easier. <br />
@@ -57,20 +62,859 @@
             agree.
           </p>
 
-          <div class="rating ui-c-question" data-qid="1" data-question-type="agree"
-            data-question="Did you understand how the ratings will work?"></div>
-
-          <div class="alert alert-success pull-left ui-c-success" data-qid="1">
+          <div class="rating ui-c-question clearfix" data-qid="1" data-question-type="agree"
+            data-question="Did you understand how the ratings will work?">
+          </div>
+          <div class="alert alert-success success ui-c-success" data-qid="1">
             Well done! You just answered the first question!
+          </div>
+
+          <p>
+            The first time a new part of relational algebra is used, there will be a
+            block of text describing how to write that type of expressions in RelAlg.js
+          </p>
+          <div class="bs-callout bs-callout-info">
+            <p>
+              Those block will look like this one.
+            </p>
+            <p>
+              <span class="label label-default">Example</span>
+              And sometimes they include an exampled, that will have this label infront
+              of them
+            </p>
+          </div>
+
+          <p>Everytime you need to solve a task, the description of the task will have
+            a <span class="label label-default">Task</span> marker in front of it.
+          </p>
+          <p>
+            Occationally there's a little side-note for those that are interested in
+            some fun facts behind RelAlg.js. These are marked with a 
+            <span class="label label-default">Side-note</span> label. You can safely
+            skip those if you are not interested.<br />
+            Likewise, there are sometimes 
+            <span class="label label-default">Acknowledgement</span> labels to let you 
+            know that some information or data comes from another source.
+          </p>
+        </div>
+        
+        <div class="bs-doc-section">
+          <div class="page-header">
+            <h1 id="practice">Practise Expressions</h1>
+          </div>
+        
+          <p>
+            So let's start out with some trivial expressions, just to get ourselves
+            familiarised with RelAlg.js and this tutorial. <br />
+            Like much of the rest of this tutorial, we have the describe the 
+            environment for our expressions. The environment given here, all have
+            a name (e.g. <em>RA-sample</em>) that corresponds to a dataset in
+            RelAlg.js. Sometimes the dataset also include other relations that are
+            not relevant to the question, and are thus not reproduced in this
+            tutorial.
+          </p>
+          <section class="environment clearfix" data-environment="Default">
+            <table class="relation table table-condensed table-bordered table-striped">
+              <thead>
+                <tr><th colspan="2">Foo</th></tr>
+                <tr><th>A</th><th>B</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>2</td></tr>
+                <tr><td>3</td><td>4</td></tr>
+              </tbody>
+            </table>
+            <table class="relation table table-condensed table-bordered table-striped">
+              <thead>
+                <tr><th colspan="2">Bar</th></tr>
+                <tr><th>A</th><th>B</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>2</td></tr>
+                <tr><td>5</td><td>6</td></tr>
+              </tbody>
+            </table>
+            <table class="relation table table-condensed table-bordered table-striped">
+              <thead>
+                <tr><th colspan="3">Baz</th></tr>
+                <tr><th>A</th><th>B</th><th>C</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>2</td><td>3</td></tr>
+                <tr><td>5</td><td>6</td><td>7</td></tr>
+              </tbody>
+            </table>
+          </section>
+          <p>
+            The above enviroment should be fairly self-explanatory. We have two relations
+            (<em>Foo</em> and <em>Bar</em>) that both have the same schema: &lt;<em>A</em>,
+            <em>B</em>&gt;. Then We have a third relation <em>Baz</em> that also has a third
+            attribute <em>C</em>.
+          </p>
+          <h3>Set Operations</h3>
+          <p>
+            A central building block of relational algebra is set operations &ndash; that is, 
+            using operations that compares the contents of two relations.
+          </p>
+          <div class="bs-callout bs-callout-info">
+            <h4>Set Operations</h4>
+            <p>
+              Relational Algebra contains the three main set operations: Union (&cup;),
+              Intersection (&cap;) and difference (&minus;).
+            </p>
+            <p>
+              In RelAlg.js, they are written likes in the following way: <em>R &cup; S</em>: <tt>R Union S</tt>,
+              &nbsp;&nbsp;<em>R &cap; S</em>: <tt>R Intersect S</tt> &nbsp;&nbsp;and lastly 
+              <em>R &minus; S</em>: <tt>R - S</tt>.
+            </p>
+          </div>
+          <p class="task">
+            Without using RelAlg.js, write an expression that finds the tuples ("rows") 
+            that <em>Foo</em> have in common with <em>Bar</em>. Once you have an
+            expression, again without using RelAlg.js, compute what relation the
+            expression results in.
+          </p>
+          <p class="task">
+            Enter the expression you wrote above into RelAlg.js and evaluate it against
+            the <em>Default</em> dataset. 
+          </p>
+          <p>
+            Hopefully the result from RelAlg.js should confirm the result you first found
+            by hand. In this manner, RelAg.js can be used to verify that the expressions 
+            you write are valid, and in fact gives the result that was intended.
+          </p>
+          <p>
+            Let's move on to an expression that also involves modifying the schema of one 
+            of the relations before using it for a set operation.
+          </p>
+          <p class="task">
+            Write an expression that finds the tuples of <em>Foo</em>, that does not have
+            a values of &lt;A,B&gt; that is also found in a tuple of <em>Baz</em>. First
+            calculate the result by hand, then try and evaluate your expression in 
+            RelAlg.js to verify your result.
+          </p>
+          <div class="bs-callout bs-callout-info">
+            <h4>Projection</h4>
+            <p>
+              In relational algebra you can drop attributes from a schema, or even reorder
+              the attributes, using the projection operations: 
+              <em>&pi;<sub>A, ..., N</sub> R</em>. So if your relation <em>R</em> has the
+              schema &lt;A,B,C&gt; and you want to produce a new relation that only has
+              &lt;A, C&gt; you would use <em>&pi;<sub>A,C</sub> R</em>.
+            </p>
+            <p>
+              In RelAlg.js this is written like so: <tt>Project[A, ..., N](R)</tt>.
+          </div>
+          <div class="rating ui-c-question" data-qid="2" data-question-type="helpful"
+            data-question="How helpful was it to be able to verify simple expressions using RelAlg.js">
+          </div>
+
+          <h3>Schema Operations</h3>
+          <p>
+            Quite often, relational algebra expressions require quite a few alterations to
+            the schemas of the original relations. This is achieved with a mixture of 
+            renames and projections.
+          </p>
+          
+          <div class="bs-callout bs-callout-info">
+            <h4>Renames</h4>
+            <p>
+              Sometimes you want to rename an attribute into something else. This is
+              often to later use the expression in a (conditional) join or cartesian
+              product. <br />
+              In relational algebra, this is written as <em>&rho;<sub>A/B</sub> R</em>, which 
+              renames the attribute <em>A</em> to <em>B</em>. In RelAlg.js this is written
+              as <tt>Rename[A/B](R)</tt>.
+            </p>
+          </div>
+          
+          <p class="task">
+            Without using RelAlg.js, write an expression that changes the <em>Baz</em> 
+            relation so instead of having the schema &lt;A, B, C&gt;, it has the
+            schema &lt;charlie, able&gt;, where <em>charlie</em> used to be the 
+            <em>C</em>-attribute, and similarly <em>able</em> used to be the
+            <em>A</em>-attribute.
+          </p>
+          
+          <p>
+            Okay, now that you know how to transform the schema of relations, it's
+            time to try out joining two different relations into one. Remember that
+            for cartesian product (<em>R &times; S</em>) and conditional joins 
+            (R &bowtie;<sub>&theta;</sub> S), the schemas of <em>R</em> and <em>S</em>
+            needs to be disjoint &ndash; i.e. they can not overlap.
+          </p>
+          
+          <div class="bs-callout bs-callout-info">
+            <h4>Criterias &ndash; For Conditional Joins and Selections</h4>
+            <p>
+              Criterias are used both for conditional joins <em>R &bowtie;<sub>&theta;</sub> 
+              S</em> (which in RelAlg.js is written as <tt>R Join[&theta;] S</tt>) and 
+              selections <em>&sigma;<sub>&theta;</sub> R</em> (which is written as 
+              <tt>Select[&theta;](R)</tt>). <br />
+              In relational algebra, criteria are normally written with the standard 
+              math-syntax (&wedge; for and, &vee; for or, etc.). Because it's tedious
+              to write this on normal keyboards, RelAlg.js uses a slightly different
+              syntax.
+            </p>
+            <p>
+              The syntax that RelAlg.js uses is identical to that used of C or Java,
+              that is <tt>==</tt> for equals, <tt>!=</tt> for not-equals, and <tt>&lt;</tt>,
+              <tt>&lt;=</tt>, <tt>&gt;</tt> and <tt>&gt;=</tt> for comparisons. And is
+              written using <tt>&amp;&amp;</tt> and or is witten with <tt>||</tt>.
+            </p>
+            <p>
+              If you just write an attribute-name, it will use the value of the given
+              attribute. For comparing against values, you can either use integers, floats
+              or strings. Strings are written in single-quotes <tt>'</tt> &ndash; i.e.
+              <tt>'a string'</tt>.
+            </p>
+            <p>
+              <span class="label label-default">Example</span> Say you want to find all the
+              tuples ("rows") of <em>Foo</em>, that has an <em>A</em>-attribute greater
+              than one and a <em>B</em>-attribute equals to the string <em>M</em>, you would write 
+              <tt>Select[A > 1 &amp;&amp; B == 'M'](Foo)</tt>.
+          </div>
+          
+          <p class="task">
+            Without using RelAlg.js write an expression that returns a relation with the 
+            schema &lt;Foo_B, Baz_A&gt; that contains the <em>B</em>-values from 
+            <em>Foo</em> and the <em>A</em>-values from <em>Baz</em>, where it holds that 
+            <em>A</em> from <em>Foo</em> equals <em>B</em> from </em>Baz</em>.
+          </p>
+
+          <div class="rating ui-c-question" data-qid="3" data-question-type="difficult"
+            data-question="How easy was it to write the two above expressions">
+          </div>
+          
+          <p>
+            One of the main selling-points of RelAlg.js is the static type-checker that
+            will calculate the schema of the resulting relation for each and every 
+            operation, and then check if this schema can be used for the next operation.
+            <br />
+            If not, it will highlight the expression that does not make sense, and
+            give an explanation for why it doesn't make sense.
+          </p>
+          <p class="task">
+            Now try and take the expressions you wrote above, and write it into RelAlg.js.
+            Did your expressions type-check? And did they produce the result you intended?
+          </p>
+          <div class="rating ui-c-question" data-qid="4" data-question-type="agree"
+            data-question="Type-checking helps me know that my expressions are valid">
           </div>
         </div>
         
         <div class="bs-doc-section">
           <div class="page-header">
-            <h1 id="introduction">Trivial Expressions</h1>
+            <h1 id="address-book">Address-book Expressions</h1>
           </div>
         
-          <p>Here's some more text</p>
+          <p>
+            Now let's progress from some very contrived examples to something that
+            has a bit more of a real-world feel to them. <br />
+            For that we need a new environment with a new set of relations to write
+            expressions for.
+          </p>
+          <p>
+            Hopefully you have also figured out how to use RelAlg.js, and therefore
+            you can now start out with writing your expression in RelAlg.js. This
+            way you should be able to use the error-highlighting help you write out
+            your expressions.
+          </p> 
+          
+          <section class="environment clearfix" data-environment="Address book">
+            <table class="relation table table-condensed table-bordered table-striped">
+              <thead>
+                <tr><th colspan="4">People</th></tr>
+                <tr><th>pid</th><th>name</th><th>age</th><th>aid</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>John</td><td>42</td><td>1</td></tr>
+                <tr><td>2</td><td>Victor</td><td>22</td><td>2</td></tr>
+                <tr><td>3</td><td>Jane</td><td>37</td><td>1</td></tr>
+                <tr><td>4</td><td>Anna</td><td>26</td><td>3</td></tr>
+                <tr><td>5</td><td>Lindsey</td><td>32<td>4</td></tr>
+              </tbody>
+            </table>
+            <table class="relation table table-condensed table-bordered table-striped">
+              <thead>
+                <tr><th colspan="5">Addresses</th></tr>
+                <tr><th>aid</th><th>street</th><th>number</th><th>zip</th><th>country</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>Long st.</td><td>1200</td><td>87501</td><td>USA</td></tr>
+                <tr><td>2</td><td>Blvd. de Poisson</td><td>86</td><td>65120</td><td>France</td></tr>
+                <tr><td>3</td><td>Ave. de Beurre</td><td>100</td><td>65120</td><td>France</td></tr>
+                <tr><td>4</td><td>Broad Ave.</td><td>587</td><td>87501</td><td>USA</td></tr>
+              </tbody>
+            </table>
+          </section>
+          
+          <p>
+            Let's first start out simple, with a few expressions that doesn't
+            involve too many schema-changes in order to enable the use of joins.
+          </p>
+          <p class="task">
+            In RelAlg.js, write an expression that finds the people who live in
+            the USA. The return-schema should be &lt;pid, name&gt;.
+          </p>
+          <p>
+            This type of joins can be rather useful if your relations are structure
+            akin to how you would design a normalised database structure. <br />
+            However, the expressions you are going to write often involves self-joins
+            because you want to find e.g. the people that have their address in common.
+            This often requires a fair amount of renames before it is allowed. But let's
+            find out just how much.
+          </p>
+          <p class="task">
+            Find the people that live together &ndash; i.e. have the same <em>aid</em>.
+            The resulting schema should be &lt;name1, name2, aid&gt;. Don't worry
+            about having two tuples ("rows") per couple sharing an address.
+          </p>
+          
+          <div class="rating ui-c-question" data-qid="5" data-question-type="helpful"
+            data-question="How useful was RelAlg.js when writing the two above expressions">
+          </div>
+          
+          <h3>More complicated expressions</h3>
+          <p>
+            When writing more complicated expressions, it can often be nice to first
+            write an expression that calculates some component of the final result,
+            and then a second expression that then incorporates the results calculated
+            by the first expression.
+          </p>
+          <div class="bs-callout bs-callout-info">
+            <h4>Storing the result of an expression as a named relation</h4>
+            <p>
+              If you just write an expression in RelAlg.js the results is stored in
+              relation called <em>it</em>. Any old results is overwritten. But
+              sometimes you might want to ensure that the result is not overwritten
+              and has a more meaningful name than <em>it</em>. For this you can use
+              assignments. <br />
+              <tt>Name := Expression</tt> is the syntax used for assignments. Keep
+              in mind that any expression already existing with a given <em>Name</em>
+              is still overwritten using assignments.
+            </p>
+            <p>
+              <span class="label label-default">Example</span>
+              You can store a relation of peoples names using
+              <tt>Names := Project[name](People)</tt>.
+            </p>
+            <p>
+              <span class="label label-default">Side-note</span>
+              The name <em>it</em> for unnamed relations is a throwback to languages
+              such as <em>Standard ML</em> that uses <em>it</em> for the result of 
+              the last expression evaluated.
+            </p>
+          </div>
+          
+          <p class="task">
+            Let's revisit our list of couples. Write an expression that instead
+            returns a relation with the same schema as <em>People</em> that only
+            contains the people that shares an address with someone else. Let's
+            call this relation for <em>TakenPeople</em>.
+          </p>
+          
+          <p>
+            Now our environment has been extended with new relation we can use in
+            future in cases were we would happen to need a list of taken people.
+          </p>
+          
+          <p class="task">
+            Write a expression that calculates all the single people &ndash; single
+            is understood to be not sharing an address with someone else. The result
+            should have the same schema as <em>People</em>. You could write a
+            expression that only uses <em>People</em>, but it is much simpler if
+            it also relies on <em>TakenPeople</em>.
+          </p>
+
+          <p>
+            To further demonstrate how useful it can be, to start thinking of
+            useful sub-expressions to store in (temporary) relations, let's have
+            one more slighly more complicated example.
+          </p>
+
+          <p class="task">
+            Write an expression that find potential couples &ndash; that is, single
+            people that share zip-code and country. The result should have the
+            schema &lt;name1, name2, zip, country&gt;. Again, don't worry about
+            having two tuples ("rows") per potential couples.
+          </p>
+
+          <p>
+            If we didn't have the <em>SinglePeople</em> relation we first defined
+            using an expression, the above expression would probably have been 
+            rather convoluted to write. <br />
+            Having the sub-expression as a relation in the environment also allows
+            you to confirm that it does in fact contain the data you imagined to.
+          </p>
+          
+          <div class="rating ui-c-question" data-qid="6" data-question-type="helpful"
+            data-question="How helpful is splitting expressions up into smaller expressions using assignments">
+          </div>
+           
+          <h3>Possible improvements to RelAlg.js</h3>
+          <p>
+            Currently RelAlg.js does not support evaluating more than a single
+            expression at a time. So let's imagine that RelAlg.js works similarly
+            to other programming languages, where you can have multiple expressions
+            seperated by a semi-colon, e.g.
+          </p>
+          <pre>Sub5 := Select[A &lt; 5](Data);
+Above5 := Data - Sub5;</pre>
+              
+          <div class="rating ui-c-question" data-qid="7" data-question-type="helpful"
+            data-question="How helpful do you imagine evaluating multiple expressions at once would be">
+          </div>
+        </div>
+
+        <div class="bs-doc-section">
+          <div class="page-header">
+            <h1 id="graphs">Expressions as Graphs</h1>
+          </div>
+        
+          <p>
+            We can also imagine an expression like a graph &ndash; actually as a tree. 
+            At the bottom of the tree (i.e. the leaves) are expressions,
+            and each point on the graph (node or vertice, if you like) are an expression.
+            So if we start at each leaf, and work our way up evaluating the expressions
+            on the way, we end up with our result as we hit the top (root) of the tree.
+          </p>
+          <p>
+            <span class="label label-default">Side-note</span>
+            For those interested, this expression graph is actually the abstract syntax
+            tree (AST) of the parsed relational algebra expression. Expressions are
+            evaluated by a post-order tree-travels of the tree.
+          </p>
+          
+          <p>
+            Below are an example of how an expression can be turned into a graph.
+          </p>
+          
+          <table class="table">
+            <thead>
+              <tr><th>Expression</th><th>Graph</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <p>In relational algebra: <br />
+                  &pi;<sub>B,C</sub>(
+                    &sigma;<sub>A&gt;5</sub>(
+                      &sigma;<sub>B&ne;2</sub>(Foo)
+                      &cup;
+                      &rho;<sub>temp/A</sub>(
+                        &rho;<sub>B/A</sub>(
+                          &rho;<sub>A/temp</sub>(Bar)
+                        )
+                      )
+                    )
+                  )
+                  </p>
+                  <p>
+                    Or in RelAlg.js syntax
+                  </p>
+                  <pre>
+Project[B,C](
+  Select[A&gt;5](
+    Select[B!=2](Foo)
+    Union
+    Rename[temp/A](
+      Rename[B/A](
+        Rename[A/temp](Bar)
+      )
+    )
+  )
+)</pre>
+                </td>
+                <td>
+                  <img src="graphs/expr1.svg" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <p>
+            So the question then is, does having such a graphical representation of an
+            expression make it easier to understand the expression? In this case, it 
+            is a very nonsensical expression, so let's try again with an expression
+            that is actually meaningful. This second example is against the 
+            <em>RS-sample</em> environment.
+          </p>
+          
+          <table class="table">
+            <thead>
+              <tr><th>Expression</th><th>Graph</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <p>
+                    In relational algebra: <br />
+                    &pi;<sub>beer</sub>(
+                      (
+                        &pi;<sub>name</sub>(Drinker)
+                        &minus;
+                        &rho;<sub>drinker/name</sub>(
+                          &pi;<sub>drinker</sub>(
+                            &sigma;<sub>bar = "James Joyce Pub"</sub>(
+                              Frequents
+                            )
+                          )
+                        )
+                      )
+                      &bowtie;<sub>drinker = name</sub>
+                      Likes
+                    )
+                  </p>
+                  <p>Or in RelAlg.js syntax:</p>
+                  <pre>
+Project[beer] (
+  (
+    Project[name] (Drinker)
+    -
+    Rename[drinker/name](
+      Project[drinker](
+        Select[bar == 'James Joyce Pub'](
+          Frequents
+        )
+      )
+    )
+  )
+  Join[drinker == name]
+  Likes
+)</pre>
+                </td>
+                <td>
+                  <img src="graphs/expr2.svg" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <p>
+            Here the written expression starts becoming quite complicated &ndash;
+            especially in the relational algebra syntax where there isn't even 
+            any indentation to keep up orientated about when each part ends.
+          </p>
+          <p class="task">
+            Without first looking at the explanation given just below, try and 
+            guess what the above expression returns, first by looking at the 
+            written expression and then by looking at the graph.
+          </p>
+          <hr />
+          <p>
+            <span class="label label-default">Explanation</span>
+            In case you couldn't quite figure out what the expression above is
+            supposed to calculate, here's an attempt at interpreting the graph.
+            Hover over the blurred text to see.
+            <div class="spoiler">
+              If we look at the graph, we can see that is has 3 sources of data.
+              First it takes all drinkers, and changes the schema to only include
+              <em>name</em>. Then it takes the Frequents-relation, filters it to
+              only people that frequent the <em>James Joyce Pub</em>, then keeps
+              only the name of the drinker, which is renamed into <em>name</em>.
+              We then take the set-difference between these two, which results in
+              a list of all drinkers that does not frequent the pub.
+              By joining this list onto the list of <em>Likes</em>, and keeping
+              only the name of beers liked, we end up with a list of beers liked
+              by people that does not frequent the <em>James Joyce Pub</em>.
+              <br />
+              Easy, right? Okay, maybe not easy, maybe easier than trying to
+              decipher the written expression.
+            </div>
+          </p>
+          
+          <p>
+            So now the question is, if you found it useful and easier to understand
+            expressions when they are represented as a graph, instead of a written
+            expression.
+          </p>
+          
+          <div class="rating ui-c-question" data-qid="8" data-question-type="agree"
+            data-question="The graphical representation was more easily understood">
+          </div>
+        </div>
+        
+        <div class="bs-doc-section">
+          <div class="page-header">
+            <h1 id="beer-drinker">Beer-drinker Expressions</h1>
+          </div>
+
+          <p>
+            Time for the final data-set. This time we six relations to deal with, so
+            we can create some more complicated expressions involving multiple joins.
+          </p>
+          <p>
+            If you feel it will help you, you are welcome to split any of the 
+            expressions you are asked to write into smaller sub-expressions, and 
+            create new "temporary" relations that you can then build upon.
+          </p>
+          
+          <div class="bs-callout bs-callout-info">
+            <h4>Ensuring the correct evaluation order of joins</h4>
+            <p>
+              If you don't know if the relations are joined in the order you want to,
+              you can always take a look at the expression-graph. <br />
+              If you wrap an expression in parentheses, you will ensured that that
+              part will be evaluated first.
+            </p>
+            <p>
+              <span class="label label-default">Example</span>
+              The expression <tt>Foo X Bar X Baz</tt> is equivalent to 
+              <tt>(Foo X Bar) X Baz</tt>. If you really meant to take the cartesian 
+              product of Bar and Baz first, you should write <tt>Foo X (Bar X Baz)</tt>.
+            </p> 
+            <p>
+              <span class="label label-default">Side-note</span>
+              In technical terms, this behaviour is call being left-associative. And
+              in relational algebra, the operators also have different
+              precedence-levels. <em>&times;, &bowtie;, &minus;</em> and <em>/</em>
+              are all evaluated before <em>&cap;</em> and <em>&cup;</em>, unless
+              overwritten by enclosing it in parentheses.
+            </p>
+          </div>
+
+          <div class="environment clearfix" data-environment="RS-Sample">
+            <table class="relation table table-condensed table-bordered table-striped">
+              <thead>
+                <tr><th colspan="2">Bar</th></tr>
+                <tr><th>name</th><th>address</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Down Under Pub</td><td>802 W. Main Street</td></tr>
+                <tr><td>The Edge'</td><td>108 Morris Street</td></tr>
+                <tr><td>James Joyce Pub</td><td>912 W. Main Street</td></tr>
+                <tr><td>Satisfaction</td><td>905 W. Main Street</td></tr>
+                <tr><td>Talk of the Town</td><td>108 E. Main Street</td></tr>
+              </tbody>
+            </table>
+            <table class="relation table table-condensed table-bordered table-striped">
+              <thead>
+                <tr><th colspan="2">Beer</th></tr>
+                <tr><th>name</th><th>brewer</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Amstel</td><td>Amstel Brewery</td></tr>
+                <tr><td>Budweiser</td><td>Anheuser-Busch Inc.</td></tr>
+                <tr><td>Corona</td><td>Grupo Modelo</td></tr>
+                <tr><td>Dixie</td><td>Dixie Brewing</td></tr>
+                <tr><td>Erdinger</td><td>Erdinger Weissbrau</td></tr>
+                <!-- <tr><td>Full Sail</td><td>Full Sail Brewing</td></tr> -->
+              </tbody>
+            </table>
+            <table class="relation table table-condensed table-bordered table-striped">
+              <thead>
+                <tr><th colspan="2">Drinker</th></tr>
+                <tr><th>name</th><th>address</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Amy</td><td>100 W. Main Street</td></tr>
+                <tr><td>Ben</td><td>101 W. Main Street</td></tr>
+                <tr><td>Coy</td><td>200 S. Duke Street</td></tr>
+                <tr><td>Dan</td><td>300 N. Duke Street</td></tr>
+                <tr><td>Eve</td><td>100 W. Main Street</td></tr>
+              </tbody>
+            </table>
+            <table class="relation table table-condensed table-bordered table-striped">
+              <thead>
+                <tr><th colspan="3">Frequents</th></tr>
+                <tr><th>drinker</th><th>bar</th><th>times_a_week</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Amy</td><td>James Joyce Pub</td><td>2</td></tr>
+                <tr><td>Ben</td><td>James Joyce Pub</td><td>1</td></tr>
+                <tr><td>Ben</td><td>Satisfaction</td><td>2</td></tr>
+                <tr><td>Ben</td><td>Talk of the Town</td><td>1</td></tr>
+                <tr><td>Coy</td><td>Down Under Pub</td><td>1</td></tr>
+                <!-- <tr><td>Coy</td><td>The Edge</td><td>1</td></tr>
+                <tr><td>Dan</td><td>Down Under Pub</td><td>2</td></tr>
+                <tr><td>Dan</td><td>The Edge</td><td>1</td></tr>
+                <tr><td>Dan</td><td>James Joyce Pub</td><td>1</td></tr>
+                <tr><td>Dan</td><td>Satisfaction</td><td>2</td></tr>
+                <tr><td>Dan</td><td>Talk of the Town</td><td>2</td></tr>
+                <tr><td>Eve</td><td>James Joyce Pub</td><td>2</td></tr> -->
+              </tbody>
+            </table>
+            <table class="relation table table-condensed table-bordered table-striped">
+              <thead>
+                <tr><th colspan="3">Serves</th></tr>
+                <tr><th>bar</th><th>beer</th><th>price</th></tr>
+              </thead>
+              <tbody>
+                 <tr><td>Down Under Pub'</td><td>Amstel</td><td>2.75</td></tr>
+                 <tr><td>Down Under Pub</td><td>Budweiser</td><td>2.25</td></tr>
+                 <tr><td>Down Under Pub</td><td>Corona</td><td>3.00</td></tr>
+                 <tr><td>The Edge</td><td>Amstel</td><td>2.75</td></tr>
+                 <tr><td>The Edge</td><td>Budweiser</td><td>2.50</td></tr>
+                 <!-- <tr><td>The Edge</td><td>Corona</td><td>3.00</td></tr>
+                 <tr><td>James Joyce Pub</td><td>Amstel</td><td>3.00</td></tr>
+                 <tr><td>James Joyce Pub</td><td>Corona</td><td>3.25</td></tr>
+                 <tr><td>James Joyce Pub</td><td>Dixie</td><td>3.00</td></tr>
+                 <tr><td>James Joyce Pub</td><td>Erdinger</td><td>3.50</td></tr>
+                 <tr><td>Satisfaction</td><td>Amstel</td><td>2.75</td></tr>
+                 <tr><td>Satisfaction</td><td>Budweiser</td><td>2.25</td></tr>
+                 <tr><td>Satisfaction</td><td>Corona</td><td>2.75</td></tr>
+                 <tr><td>Satisfaction</td><td>Dixie</td><td>2.75</td></tr>
+                 <tr><td>Satisfaction</td><td>Full Sail</td><td>2.75</td></tr>
+                 <tr><td>Talk of the Town</td><td>Amstel</td><td>2.50</td></tr>
+                 <tr><td>Talk of the Town</td><td>Budweiser</td><td>2.20</td></tr> -->
+              </tbody>
+            </table>
+            <table class="relation table table-condensed table-bordered table-striped">
+              <thead>
+                <tr><th colspan="2">Likes</th></tr>
+                <tr><th>drinker</th><th>beer</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Amy</td><td>Amstel</td></tr>
+                <tr><td>Amy</td><td>Corona</td></tr>
+                <tr><td>Ben</td><td>Amstel</td></tr>
+                <tr><td>Ben</td><td>Budweiser</td></tr>
+                <tr><td>Coy</td><td>Dixie</td></tr>
+                <!-- <tr><td>Dan</td><td>Amstel</td></tr>
+                <tr><td>Dan</td><td>Budweiser</td></tr>
+                <tr><td>Dan</td><td>Corona</td></tr>
+                <tr><td>Dan</td><td>Dixie</td></tr>
+                <tr><td>Dan</td><td>Erdinger</td></tr>
+                <tr><td>Eve</td><td>Amstel</td></tr>
+                <tr><td>Eve</td><td>Corona</td></tr> -->
+              </tbody>
+            </table>
+
+            <div class="acknowledgement">
+              The above dataset comes curtesy of 
+              <a href="http://www.cs.duke.edu/~junyang/ra/">RS</a> from Duke University.
+            </div>
+          </div>
+          
+          <p>
+            <span class="label label-default">Notice</span>
+            Please note that the above given environment is actually only a subsection of
+            the entire data-set. All relations have been shortened to only show their first
+            5 lines, to make it more readable. See the full relations in RelAlg.js.
+          </p>
+          
+          <p>
+            To start out, let's consider <em>Ben</em>. He is quite fond of going to
+            bars to drinks (as evident from the many bars he frequent). But he's 
+            also fond of drinking on the cheap.
+          </p>
+          
+          <p class="task">
+            Write an expression that gives the bars serving the beers that Ben like, with the
+            address of the bar and the price of the beer. The schema should be
+            &lt;bar, address, beer, price&gt;.
+          </p>
+          
+          <p>
+            Now suppose that <em>Ben</em> likes to go out drinking with <em>Amy</em>. He
+            wants to ensure that they have a nice evening, so he wants to go to a bar
+            that serves all the beers they like. 
+          </p>
+          
+          <div class="bs-callout bs-callout-info">
+            <h4>The <em>For-all</em> of relational algebra: Division</h4>
+            <p>
+              In relational algebra, there is a special operator that doesn't
+              really have a one-to-one equivalent in SQL. It's the division 
+              operator <em>R &nbsp;&#8725;&nbsp; S</em>, that in RelAlg.js is written
+              using a normal forward-slash: <tt>R / S</tt>. <br />
+              It can almost be considered the reverse of cartesian products 
+              (<em>R &times S</em>, or in RelAlg.js <tt>R X S</tt>). It 
+              returns a relation of the attributes that is unique to <em>R</em>,
+              where for values of <em>R</em>, they must have a values for
+              the shared attributes present for each tuple ("row") in <em>S</em>.
+            </p>
+            <p>
+              <span class="label label-default">Example</span>
+              If you have a relation <em>R</em> with the schema &lt;a, b&gt; 
+              and relation <em>S</em> with the schema &lt;b&gt;, then the
+              expression <tt>R / S</tt> finds the <em>a</em>'s of <em>S</em>,
+              where the values of <em>b</em> for each <em>a</em> is equal to
+              all of the <em>b</em>'s in <em>S</em>.
+            </p>
+          </div>
+          
+          <p class="task">
+            Write an expression that finds the subset of bars that serves
+            all the beers that Amy and Ben likes. The schema should be identical to that
+            of <em>Bar</em>, namely &lt;name, address&gt;. You might want to consider
+            splitting this up into smaller expressions.
+          </p>
+          
+          <div class="rating ui-c-question" data-qid="9" data-question-type="difficult"
+            data-question="How easy did you find writing the two above expressions">
+          </div>
+          <div class="rating ui-c-question" data-qid="10" data-question-type="helpful"
+            data-question="How helful was RelAlg.js to you when writing the expressions">
+          </div>
+          <div class="alert alert-success success ui-c-success" data-qid="10">
+            <strong>Congratulations!</strong> You have now concluded all of the tasks in the 
+            tutorial! <br />
+            Please finish the rest of the survey too, thank you.
+          </div>          
+        </div>
+
+        <div class="bs-doc-section">
+          <div class="page-header">
+            <h1 id="overall">Overall Evaluation</h1>
+          </div>          
+          <p>
+            Great work making it through all of the tutorial! To round up the evaluation
+            part of the tutorial, here's a few last questions to help evaluate the 
+            usefulness of RelAlg.js.
+          </p>
+          <div class="rating ui-c-question" data-qid="10" data-question-type="agree"
+            data-question="I understand relational algebra better after today">
+          </div>
+          <div class="rating ui-c-question" data-qid="11" data-question-type="difficult"
+            data-question="In general, how easy was it to follow this tutorial">
+          </div>
+          <div class="rating ui-c-question" data-qid="12" data-question-type="agree"
+            data-question="I think RelAlg.js helped me understand relational algebra">
+          </div>
+          <div class="rating ui-c-question" data-qid="13" data-question-type="helpful"
+            data-question="How helpful did you find the error-highlighting of RelAlg.js">
+          </div>
+          <div class="rating ui-c-question" data-qid="14" data-question-type="helpful"
+            data-question="How helpful did you find the ability to visualise expressions as a graph">
+          </div>
+        </div>
+        
+        <div class="bs-doc-section">
+          <div class="page-header">
+            <h1 id="send-in">Review and Submit Evaluation</h1>
+          </div>
+        
+          <p>
+            First of all, thank you so much for taking the time to walk through
+            this tutorial and answering all the questions. Now you just need to
+            submit the answers! If you want to, you can also use the table below
+            to review your answers before submitting.
+          </p>
+
+          <form method="POST" action="http://sevengoslings.net/~fangel/survey/store">
+            <input type="hidden" name="id" value="" />
+            <input type="hidden" name="survey" value="ra_tutorial" />
+            <input type="hidden" name="answers" value="{}" />
+            
+            <input type="submit" class="btn btn-primary" value="Submit Answers" />
+          </form>
+          
+          <hr />
+
+          <table id="review" class="table table-bordered table-striped">
+            <thead>
+              <tr><th>Question</th><th>Answer</th></tr>
+            </thead>
+            <tbody>
+              <!-- filled in by components/ui/review -->
+            </tbody>
+          </table>
+          
+          <h1>Once again. THANK YOU for participating.</h1>
+          <hr />
+          <br /><br />
         </div>
       </div>
     </div>

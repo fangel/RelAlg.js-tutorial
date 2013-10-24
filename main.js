@@ -14,13 +14,25 @@ require.config({
 define(['flight/lib/debug', 'jquery'], function(DEBUG, $) {
   DEBUG.enable(true)
   DEBUG.events.logAll()
-  require(['components/data/questions', 
-           'components/ui/progress', 
+  require(['components/data/questions',
+           'components/data/persistance',
+           'components/ui/progress',
            'components/ui/question',
-           'components/ui/success'],
-          function(dataQuestions, uiProgress, uiQuestion, uiSuccess) {
+           'components/ui/success',
+           'components/ui/form',
+           'components/ui/review'],
+          function(
+            dataQuestions,
+            dataPersistance,
+            uiProgress,
+            uiQuestion,
+            uiSuccess,
+            uiForm,
+            uiReview) {
     dataQuestions.attachTo(document)
     uiProgress.attachTo('#progress')
+    uiForm.attachTo('form')
+    uiReview.attachTo('#review')
     
     $('.ui-c-question').each(function() {
       uiQuestion.attachTo(this, $(this).data())
@@ -29,5 +41,7 @@ define(['flight/lib/debug', 'jquery'], function(DEBUG, $) {
     $('.ui-c-success').each(function() {
       uiSuccess.attachTo(this, $(this).data())
     })
+    
+    dataPersistance.attachTo(document, {prefix: $('input[name="survey"]').val()})
   })
 })

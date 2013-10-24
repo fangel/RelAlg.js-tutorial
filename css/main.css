@@ -1,5 +1,13 @@
+body {
+  counter-reset: task;
+}
+
 .container[role="main"] {
   margin-top: 40px;
+}
+
+tt {
+  white-space: nowrap;
 }
 
 /*
@@ -7,6 +15,9 @@
  */
 .rating .scale {
   margin-bottom: 10px;
+}
+.rating + .rating {
+  padding-top: 5px;
 }
 .rating .scale > span {
   line-height: 18px;
@@ -38,4 +49,106 @@
  */
 .ui-c-success {
   display: none; /* Initially hidden */
+}
+.success {
+  display: inline-block;
+  clear: both;
+}
+/* Final thank you */
+form .success {
+  margin-left: 10px;
+  margin-bottom: 0;
+  padding: 6px;
+  vertical-align: middle;
+}
+
+/*
+ * Relations
+ */
+.environment {
+  border: 1px solid #EFEFEF;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.environment::before {
+  content: 'Environment: ' attr(data-environment);
+  color: #666666;
+  font-weight: bold;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-top: -3px;
+}
+.relation {
+  width: auto;
+  float: left;
+  margin-bottom: 0;
+  margin-right: 20px;
+}
+.relation::last-child {
+  margin-left: 0;
+}
+.relation thead tr:first-child th {
+  border-top: 1px solid white !important;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  border-bottom: 1px solid #dddddd;
+}
+.environment .acknowledgement {
+  padding-top: 10px;
+  clear: left;
+}
+.environment .acknowledgement::before {
+  content: 'Acknowledgement';
+  background-color: #999999;
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: bold;
+  line-height: 1;
+  color: #ffffff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+
+/*
+ * Tasks
+ */
+p.task::before {
+  counter-increment: task;
+  content: 'Task #' counter(task);
+  background-color: #999999;
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: bold;
+  line-height: 1;
+  color: #ffffff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+
+/*
+ * Spoilers
+ */
+.spoiler {
+  margin-left: -5px;
+  padding-left: 5px;
+  -webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+  -o-filter: blur(3px);
+  -ms-filter: blur(3px);
+  filter: blur(3px);
+  opacity: 0.8;
+}
+.spoiler:hover {
+  -webkit-filter: none;
+  -moz-filter: none;
+  -o-filter: none;
+  -ms-filter: none;
+  filter: none;
+  opacity: 1;
 }
