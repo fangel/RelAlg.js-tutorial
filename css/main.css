@@ -41,7 +41,7 @@ tt {
   color: inherit;
 }
 .rating .options .option:hover {
-  color: black;
+  color: black !important;
 }
 
 /*
