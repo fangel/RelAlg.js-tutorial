@@ -11,7 +11,7 @@
   "private": true,
   "ignore": [
     "**/.*",
-    "bower_components",
+    "bower_components"
   ],
   "dependencies": {
     "flight": "~1.1.1",
